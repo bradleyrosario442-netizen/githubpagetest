@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TDM - Toner Depot Multiservicios | Soluciones de Impresión Empresarial</title>
+<meta name="description" content="Renta, venta, soporte técnico, mantenimiento y consumibles de impresión para empresas. Mantén tu operación funcionando sin interrupciones." />
+
+<!-- Tailwind via CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Lucide icons via CDN -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        navy: { 950:'#020813', 900:'#050C1A', 800:'#0A1628', 700:'#0D1F3C', 600:'#102A50' },
+        electric: { 400:'#60A5FA', 500:'#3B82F6', 600:'#2563EB', 700:'#1D4ED8' },
+        sky: { 400:'#38BDF8', 500:'#0EA5E9', 600:'#0284C7' },
+      },
+      fontFamily: {
+        sans: ['Inter','system-ui','sans-serif'],
+        display: ['Space Grotesk','system-ui','sans-serif'],
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #020813; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #050C1A; }
+  ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
+
+  .display { font-family: 'Space Grotesk', sans-serif; }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .glass-blue {
+    background: rgba(37, 99, 235, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+  .glow-blue { box-shadow: 0 0 40px rgba(37, 99, 235, 0.3); }
+
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(37, 99, 235, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(135deg, rgba(96,165,250,.4), rgba(37,99,235,.1), rgba(14,165,233,.4));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(0); }
+    33% { transform: translateY(-15px) rotate(1deg); }
+    66% { transform: translateY(-8px) rotate(-1deg); }
+  }
+  .float-anim { animation: float 7s ease-in-out infinite; }
+
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+    70% { box-shadow: 0 0 0 18px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  }
+  .whatsapp-pulse { animation: pulse-ring 2s infinite; }
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .animated-gradient {
+    background: linear-gradient(-45deg,#020813,#050C1A,#0A1628,#102A50,#050C1A);
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes blink { 0%,100% { opacity: 0.9; } 50% { opacity: 0.2; } }
+  .blink { animation: blink 1.2s infinite; }
+
+  @keyframes status-blink { 0%,100% { opacity: 0.9; } 50% { opacity: 0.4; } }
+  .status-blink { animation: status-blink 2s infinite; }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(.16,1,.3,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(.16,1,.3,1); }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(.16,1,.3,1); }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  .stagger > * { transition-delay: var(--d, 0s); }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #60A5FA, #38BDF8, #93C5FD);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn-shine { position: relative; overflow: hidden; }
+  .btn-shine::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 40%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: translateX(-100%) skewX(-15deg);
+    animation: shine 3s ease infinite;
+  }
+  @keyframes shine { 0% { transform: translateX(-100%) skewX(-15deg); } 100% { transform: translateX(300%) skewX(-15deg); } }
+
+  /* Range slider */
+  input[type="range"].slider { -webkit-appearance: none; appearance: none; background: transparent; height: 6px; }
+  input[type="range"].slider::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: #0D1F3C; }
+  input[type="range"].slider::-moz-range-track { height: 6px; border-radius: 3px; background: #0D1F3C; }
+  input[type="range"].slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; height: 18px; width: 18px;
+    background: #fff; border: 2px solid #3B82F6; border-radius: 50%;
+    cursor: pointer; margin-top: -6px; box-shadow: 0 0 12px rgba(59,130,246,0.5);
+  }
+  input[type="range"].slider::-moz-range-thumb {
+    height: 18px; width: 18px; background: #fff; border: 2px solid #3B82F6;
+    border-radius: 50%; cursor: pointer; box-shadow: 0 0 12px rgba(59,130,246,0.5);
+  }
+
+  /* Card hover effects */
+  .card-hover { transition: transform 0.3s ease, box-shadow 0.4s ease; }
+  .card-hover:hover { transform: translateY(-6px); }
+
+  /* Mobile menu */
+  .mobile-menu { display: none; }
+  .mobile-menu.open { display: block; }
+
+  /* ===== Hero Printer ===== */
+  @keyframes levitate {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-22px); }
+  }
+  @keyframes levitate-soft {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.85; transform: translate(-50%, -50%) scale(1.08); }
+  }
+  @keyframes shadow-pulse {
+    0%, 100% { opacity: 0.35; transform: translateX(-50%) scaleX(1); filter: blur(28px); }
+    50% { opacity: 0.55; transform: translateX(-50%) scaleX(0.85); filter: blur(22px); }
+  }
+
+  .printer-levitate { animation: levitate 7s ease-in-out infinite; }
+  .printer-frame { position: relative; aspect-ratio: 1 / 1; }
+  .printer-frame > svg,
+  .printer-frame > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  .printer-image {
+    filter:
+      drop-shadow(0 30px 50px rgba(37, 99, 235, 0.35))
+      drop-shadow(0 18px 35px rgba(0, 0, 0, 0.55))
+      drop-shadow(0 0 80px rgba(96, 165, 250, 0.15));
+    -webkit-box-reflect: below -60px linear-gradient(to bottom, transparent 0%, transparent 55%, rgba(0,0,0,0.22) 95%, rgba(0,0,0,0.32) 100%);
+  }
+  .printer-glow-1 { animation: glow-pulse 6s ease-in-out infinite; }
+  .printer-glow-2 { animation: glow-pulse 8s ease-in-out infinite reverse; }
+  .printer-shadow { animation: shadow-pulse 7s ease-in-out infinite; }
+  .floating-badge { animation: levitate-soft 5s ease-in-out infinite; }
+
+  /* Spec ring decoration */
+  @keyframes spin-slow {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  .spec-ring { animation: spin-slow 60s linear infinite; }
+
+  /* ===== Stats Enhanced Animations ===== */
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .shimmer-text {
+    background: linear-gradient(90deg, #fff 0%, #60A5FA 30%, #38BDF8 50%, #60A5FA 70%, #fff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 5s linear infinite;
+  }
+
+  @keyframes icon-bob {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    25% { transform: translateY(-3px) rotate(2deg); }
+    75% { transform: translateY(-1px) rotate(-2deg); }
+  }
+  .icon-bob { animation: icon-bob 4s ease-in-out infinite; }
+
+  @keyframes progress-fill {
+    from { width: 0%; }
+  }
+  @keyframes progress-pulse {
+    0%, 100% { opacity: 0.6; box-shadow: 0 0 6px rgba(59,130,246,0.4); }
+    50% { opacity: 1; box-shadow: 0 0 18px rgba(59,130,246,0.8); }
+  }
+  .stat-progress {
+    animation: progress-fill 2s cubic-bezier(.4,0,.2,1) forwards, progress-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes stat-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+    50% { box-shadow: 0 0 40px rgba(37,99,235,0.18), 0 0 70px rgba(14,165,233,0.08); }
+  }
+  .stat-card { transition: all 0.4s cubic-bezier(.4,0,.2,1); animation: stat-glow 5s ease-in-out infinite; }
+  .stat-card:nth-child(2) { animation-delay: 1.2s; }
+  .stat-card:nth-child(3) { animation-delay: 2.4s; }
+  .stat-card:nth-child(4) { animation-delay: 3.6s; }
+
+  .stat-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 30px 60px -10px rgba(37,99,235,0.5), 0 0 60px rgba(96,165,250,0.25);
+    border-color: rgba(96,165,250,0.4);
+  }
+  .stat-icon-wrap { transition: all 0.4s cubic-bezier(.34,1.56,.64,1); }
+  .stat-card:hover .stat-icon-wrap {
+    transform: scale(1.15) rotate(8deg);
+    box-shadow: 0 0 30px rgba(96,165,250,0.6);
+  }
+  .stat-value { transition: all 0.3s ease; }
+  .stat-card:hover .stat-value {
+    text-shadow: 0 0 30px rgba(96,165,250,0.7);
+  }
+
+  /* Sparkles */
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(180deg); }
+  }
+  .sparkle { animation: sparkle 4s ease-in-out infinite; }
+
+  @keyframes ring-expand {
+    0% { transform: scale(0.8); opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+  .icon-ring {
+    position: absolute; inset: 0; border-radius: inherit;
+    border: 2px solid currentColor;
+    animation: ring-expand 2.5s ease-out infinite;
+    pointer-events: none;
+  }
+</style>
+</head>
+
+<body class="bg-navy-950">
+
+<!-- ============================ NAVBAR ============================ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-5 transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 bg-gradient-to-br from-electric-600 to-sky-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-shadow">
+        <i data-lucide="printer" class="w-5 h-5 text-white"></i>
+      </div>
+      <div>
+        <span class="text-white font-black text-lg display leading-none">TDM</span>
+        <p class="text-blue-400 text-[10px] font-medium leading-none mt-0.5">Toner Depot Multiservicios</p>
+      </div>
+    </a>
+
+    <div class="hidden md:flex items-center gap-6">
+      <a href="#servicios" class="text-sm text-slate-400 hover:text-white transition font-medium">Servicios</a>
+      <a href="#comparar" class="text-sm text-slate-400 hover:text-white transition font-medium">Comparar</a>
+      <a href="#calculadora" class="text-sm text-slate-400 hover:text-white transition font-medium">Calculadora</a>
+      <a href="#testimonios" class="text-sm text-slate-400 hover:text-white transition font-medium">Testimonios</a>
+      <a href="#faq" class="text-sm text-slate-400 hover:text-white transition font-medium">FAQ</a>
+    </div>
+
+    <div class="hidden md:flex items-center gap-3">
+      <a href="https://wa.me/18097888434?text=Hola%20TDM%2C%20me%20gustar%C3%ADa%20solicitar%20una%20cotizaci%C3%B3n." target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-electric-600 to-sky-500 text-white font-semibold text-sm rounded-xl hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+        <i data-lucide="message-circle" class="w-4 h-4"></i> Cotizar
+      </a>
+    </div>
+
+    <button id="hamburger" class="md:hidden w-10 h-10 glass rounded-xl flex items-center justify-center">
+      <i data-lucide="menu" class="w-5 h-5 text-white"></i>
+    </button>
+  </div>
+
+  <div id="mobileMenu" class="mobile-menu md:hidden bg-navy-950/98 backdrop-blur-xl border-t border-white/5 px-6 py-6 space-y-3">
+    <a href="#servicios" class="block text-slate-300 hover:text-white text-base font-medium py-2 border-b border-white/5">Servicios</a>
+    <a href="#comparar" class="block text-slate-300 hover:text-white text-base font-medium py-2 border-b border-white/5">Comparar</a>
+    <a href="#calculadora" class="block text-slate-300 hover:text-white text-base font-medium py-2 border-b border-white/5">Calculadora</a>
+    <a href="#testimonios" class="block text-slate-300 hover:text-white text-base font-medium py-2 border-b border-white/5">Testimonios</a>
+    <a href="#faq" class="block text-slate-300 hover:text-white text-base font-medium py-2 border-b border-white/5">FAQ</a>
+    <a href="https://wa.me/18097888434" target="_blank" class="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-electric-600 to-sky-500 text-white font-bold text-sm rounded-xl mt-2">
+      <i data-lucide="message-circle" class="w-4 h-4"></i> Solicitar cotización
+    </a>
+  </div>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<section id="top" class="relative min-h-screen flex items-center overflow-hidden bg-navy-950">
+  <!-- Subtle background layers -->
+  <div class="absolute inset-0 grid-pattern opacity-25 pointer-events-none"></div>
+  <canvas id="particles" class="absolute inset-0 z-0 opacity-40"></canvas>
+
+  <!-- Ambient color washes -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="absolute top-0 right-0 w-[700px] h-[700px] bg-electric-600/8 rounded-full blur-[140px]"></div>
+    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-sky-500/6 rounded-full blur-[120px]"></div>
+  </div>
+
+  <!-- Soft vignette at bottom for fade-out -->
+  <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-navy-950 via-navy-950/60 to-transparent z-10 pointer-events-none"></div>
+
+  <div class="relative z-20 w-full max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+
+      <!-- ========== LEFT: TEXT (7/12) ========== -->
+      <div class="lg:col-span-7">
+        <!-- Pill badge -->
+        <div class="inline-flex items-center gap-2.5 glass-blue rounded-full pl-2 pr-4 py-1.5 mb-8 reveal">
+          <span class="flex items-center justify-center w-5 h-5 rounded-full bg-green-500/20">
+            <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+          </span>
+          <span class="text-xs text-blue-200 font-medium tracking-wide">DISTRIBUIDOR AUTORIZADO · REPÚBLICA DOMINICANA</span>
+        </div>
+
+        <!-- Headline - large editorial typography -->
+        <h1 class="display text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.5rem] font-black leading-[1] tracking-[-0.025em] mb-6 reveal" style="--d:.1s">
+          Soluciones de impresión para
+          <span class="block mt-2 bg-gradient-to-r from-blue-300 via-sky-300 to-blue-400 bg-clip-text text-transparent">
+            empresas que no pueden detenerse.
+          </span>
+        </h1>
+
+        <!-- Subtitle - refined and clean -->
+        <p class="text-lg md:text-xl text-slate-400 leading-[1.7] mb-10 max-w-xl reveal font-light" style="--d:.25s">
+          Renta, soporte, mantenimiento y consumibles <span class="text-blue-300 font-medium">incluidos</span> en un solo plan administrado. Para que tu operación imprima sin interrupciones.
+        </p>
+
+        <!-- CTA row -->
+        <div class="flex flex-col sm:flex-row gap-3 reveal" style="--d:.4s">
+          <a href="https://wa.me/18097888434?text=Hola%20TDM%2C%20me%20gustar%C3%ADa%20solicitar%20una%20cotizaci%C3%B3n%20para%20soluciones%20de%20impresi%C3%B3n%20empresarial." target="_blank"
+             class="btn-shine relative inline-flex items-center justify-center gap-2.5 px-7 py-4 bg-gradient-to-r from-electric-600 to-sky-500 text-white font-semibold text-[15px] rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_50px_rgba(37,99,235,0.5)]">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            Solicitar cotización por WhatsApp
+          </a>
+          <a href="#servicios"
+             class="group inline-flex items-center justify-center gap-2 px-7 py-4 text-white font-medium text-[15px] rounded-xl border border-white/15 hover:border-white/30 hover:bg-white/[0.03] transition-all duration-300">
+            Ver cómo funciona
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+
+        <!-- Trust line with logos placeholder -->
+        <div class="mt-14 reveal" style="--d:.55s">
+          <p class="text-xs text-slate-500 font-medium tracking-widest uppercase mb-4">Confían en TDM empresas como</p>
+          <div class="flex flex-wrap items-center gap-x-7 gap-y-3 opacity-70">
+            <div class="text-slate-300 font-bold text-sm tracking-tight">CONSTRUCTORA<span class="text-blue-400"> ORION</span></div>
+            <div class="w-px h-4 bg-white/10"></div>
+            <div class="text-slate-300 font-bold text-sm tracking-tight">MED<span class="text-blue-400">CENTER</span></div>
+            <div class="w-px h-4 bg-white/10"></div>
+            <div class="text-slate-300 font-bold text-sm tracking-tight">COLEGIO <span class="text-blue-400">DEL SUR</span></div>
+            <div class="w-px h-4 bg-white/10"></div>
+            <div class="text-slate-300 font-bold text-sm tracking-tight">GRUPO <span class="text-blue-400">NORTE</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== RIGHT: CANON PRINTER (5/12) ========== -->
+      <div class="lg:col-span-5 relative h-[420px] md:h-[480px] reveal flex items-center justify-center" style="--d:.15s">
+        <!-- Spec ring decoration -->
+        <svg class="absolute top-1/2 left-1/2 spec-ring pointer-events-none" style="width:420px;height:420px" viewBox="0 0 420 420" fill="none">
+          <circle cx="210" cy="210" r="200" stroke="url(#ringGrad)" stroke-width="0.5" stroke-dasharray="2 8" opacity="0.4"/>
+          <circle cx="210" cy="210" r="165" stroke="url(#ringGrad)" stroke-width="0.5" stroke-dasharray="1 12" opacity="0.3"/>
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.8"/>
+              <stop offset="50%" stop-color="#3B82F6" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#0EA5E9" stop-opacity="0.8"/>
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <!-- Layered glow behind printer -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-electric-600/30 blur-[90px] printer-glow-1 pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full bg-sky-500/40 blur-[70px] printer-glow-2 pointer-events-none"></div>
+        <div class="absolute top-[58%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] rounded-full bg-blue-400/25 blur-[50px] pointer-events-none"></div>
+
+        <!-- Soft floor shadow -->
+        <div class="absolute bottom-[18%] left-1/2 -translate-x-1/2 w-[50%] h-[26px] rounded-full bg-blue-950 printer-shadow pointer-events-none"></div>
+
+        <!-- Printer (smaller, centered, SVG visible by default — IMG covers it when loaded) -->
+        <div class="relative w-full max-w-[340px] mx-auto printer-levitate z-10">
+          <div class="printer-frame">
+            <!-- DEFAULT: Canon-style SVG visible immediately -->
+            <svg id="printer-fallback" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="printer-image">
+              <defs>
+                <linearGradient id="canonWhite" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FAFAFA"/>
+                  <stop offset="55%" stop-color="#E5E7EB"/>
+                  <stop offset="100%" stop-color="#9CA3AF"/>
+                </linearGradient>
+                <linearGradient id="canonTop" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFFFFF"/>
+                  <stop offset="100%" stop-color="#CBD5E1"/>
+                </linearGradient>
+                <linearGradient id="darkPanel" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#475569"/>
+                  <stop offset="100%" stop-color="#1E293B"/>
+                </linearGradient>
+                <linearGradient id="canonScreen" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#0EA5E9"/>
+                  <stop offset="100%" stop-color="#3B82F6"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Bottom paper tray cassette -->
+              <rect x="85" y="335" width="230" height="42" rx="3" fill="url(#canonWhite)"/>
+              <rect x="85" y="335" width="230" height="42" rx="3" fill="none" stroke="#64748B" stroke-width="0.5" opacity="0.3"/>
+              <rect x="180" y="350" width="40" height="11" rx="2" fill="#94A3B8" opacity="0.4"/>
+
+              <!-- Main body -->
+              <rect x="72" y="200" width="256" height="140" rx="5" fill="url(#canonWhite)"/>
+              <rect x="72" y="200" width="256" height="140" rx="5" fill="none" stroke="#64748B" stroke-width="0.5" opacity="0.3"/>
+
+              <!-- Canon logo -->
+              <text x="200" y="288" fill="#1E293B" font-size="24" font-weight="900" text-anchor="middle" font-family="Arial, sans-serif" letter-spacing="-1">Canon</text>
+
+              <!-- Paper output cavity -->
+              <rect x="135" y="300" width="130" height="22" rx="2" fill="#1E293B" opacity="0.85"/>
+              <rect x="145" y="307" width="110" height="3" rx="1" fill="#FFFFFF" opacity="0.85"/>
+              <rect x="148" y="311" width="104" height="2" rx="1" fill="#FFFFFF" opacity="0.65"/>
+
+              <!-- Power button -->
+              <circle cx="298" cy="230" r="6" fill="#FFFFFF"/>
+              <circle cx="298" cy="230" r="4.5" fill="none" stroke="#475569" stroke-width="1"/>
+              <line x1="298" y1="226" x2="298" y2="232" stroke="#475569" stroke-width="1.2"/>
+
+              <!-- USB port -->
+              <rect x="306" y="250" width="14" height="4" rx="1" fill="#1E293B" opacity="0.35"/>
+
+              <!-- Top scanner body -->
+              <rect x="72" y="85" width="256" height="120" rx="5" fill="url(#canonTop)"/>
+              <rect x="72" y="85" width="256" height="120" rx="5" fill="none" stroke="#64748B" stroke-width="0.5" opacity="0.3"/>
+
+              <!-- Document feeder cover (sloped) -->
+              <path d="M 85 85 L 315 85 L 305 58 L 95 58 Z" fill="url(#canonWhite)" opacity="0.96"/>
+              <path d="M 85 85 L 315 85 L 305 58 L 95 58 Z" fill="none" stroke="#64748B" stroke-width="0.5" opacity="0.4"/>
+              <rect x="120" y="64" width="160" height="3" rx="1" fill="#1E293B" opacity="0.35"/>
+              <rect x="140" y="60" width="120" height="3" fill="#FFFFFF" opacity="0.9"/>
+
+              <!-- Subtle line -->
+              <line x1="76" y1="205" x2="324" y2="205" stroke="#64748B" stroke-width="0.4" opacity="0.4"/>
+
+              <!-- Control panel mount arm -->
+              <rect x="55" y="155" width="22" height="6" fill="#475569" opacity="0.7"/>
+
+              <!-- Control panel (angled from left) -->
+              <g transform="translate(8, 130)">
+                <path d="M 0 0 L 130 0 L 145 75 L 0 78 Z" fill="url(#darkPanel)"/>
+                <path d="M 0 0 L 130 0 L 131 3 L 0 4 Z" fill="#64748B" opacity="0.5"/>
+
+                <!-- Touchscreen -->
+                <rect x="12" y="8" width="105" height="50" rx="3" fill="url(#canonScreen)" opacity="0.95"/>
+
+                <!-- App icon grid -->
+                <g transform="translate(18, 13)">
+                  <rect x="0" y="0" width="14" height="14" rx="2" fill="#FFFFFF" opacity="0.9"/>
+                  <rect x="18" y="0" width="14" height="14" rx="2" fill="#FFFFFF" opacity="0.9"/>
+                  <rect x="36" y="0" width="14" height="14" rx="2" fill="#22C55E" opacity="0.95"/>
+                  <rect x="54" y="0" width="14" height="14" rx="2" fill="#FFFFFF" opacity="0.9"/>
+                  <rect x="72" y="0" width="14" height="14" rx="2" fill="#FFFFFF" opacity="0.9"/>
+                  <rect x="0" y="20" width="14" height="14" rx="2" fill="#FFFFFF" opacity="0.9"/>
+                  <rect x="18" y="20" width="14" height="14" rx="2" fill="#FFFFFF" opacity="0.9"/>
+                  <rect x="36" y="20" width="14" height="14" rx="2" fill="#EF4444" opacity="0.95"/>
+                  <rect x="54" y="20" width="14" height="14" rx="2" fill="#FFFFFF" opacity="0.9"/>
+                  <rect x="72" y="20" width="14" height="14" rx="2" fill="#FFFFFF" opacity="0.9"/>
+                </g>
+
+                <!-- Buttons row -->
+                <circle cx="40" cy="68" r="5" fill="#94A3B8" opacity="0.7"/>
+                <circle cx="40" cy="68" r="3" fill="#475569"/>
+                <circle cx="65" cy="68" r="4" fill="#64748B" opacity="0.6"/>
+                <circle cx="85" cy="68" r="4" fill="#64748B" opacity="0.6"/>
+                <circle cx="110" cy="68" r="5.5" fill="#EF4444"/>
+                <circle cx="110" cy="68" r="3" fill="#FCA5A5"/>
+              </g>
+
+              <!-- Status LED -->
+              <circle cx="100" cy="360" r="3" fill="#22C55E" class="status-blink"/>
+            </svg>
+
+            <!-- IMG overlay — covers SVG when loaded, hides itself if URL fails -->
+            <img
+              src="./assets/canon-mf445dw.png"
+              alt=""
+              class="printer-image"
+              onload="var f=document.getElementById('printer-fallback'); if(f) f.style.display='none';"
+              onerror="this.style.display='none';"
+            />
+          </div>
+        </div>
+
+        <!-- Floating glass badges -->
+        <div class="absolute top-[5%] left-[2%] glass-blue rounded-xl px-3 py-2 floating-badge z-30 hidden md:block" style="animation-delay:0.5s">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-lg bg-blue-500/20 flex items-center justify-center">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-blue-300"></i>
+            </div>
+            <div>
+              <p class="text-[9px] text-slate-400 leading-none">TECNOLOGÍA</p>
+              <p class="text-[11px] text-white font-semibold leading-tight mt-0.5">Canon Original</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute top-[18%] right-[0%] glass-blue rounded-xl px-3 py-2 floating-badge z-30 hidden md:block" style="animation-delay:1.5s">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-lg bg-green-500/20 flex items-center justify-center">
+              <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            </div>
+            <div>
+              <p class="text-[9px] text-slate-400 leading-none">STATUS</p>
+              <p class="text-[11px] text-green-300 font-semibold leading-tight mt-0.5">En operación</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute bottom-[22%] left-[-2%] glass-blue rounded-xl px-3 py-2 floating-badge z-30 hidden md:block" style="animation-delay:2.5s">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-lg bg-sky-500/20 flex items-center justify-center">
+              <i data-lucide="zap" class="w-3.5 h-3.5 text-sky-300"></i>
+            </div>
+            <div>
+              <p class="text-[9px] text-slate-400 leading-none">SOPORTE</p>
+              <p class="text-[11px] text-white font-semibold leading-tight mt-0.5">24/7 incluido</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute bottom-[12%] right-[-2%] glass-blue rounded-xl px-3 py-2 floating-badge z-30 hidden md:block" style="animation-delay:1s">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-lg bg-blue-500/20 flex items-center justify-center">
+              <i data-lucide="package" class="w-3.5 h-3.5 text-blue-300"></i>
+            </div>
+            <div>
+              <p class="text-[9px] text-slate-400 leading-none">CONSUMIBLES</p>
+              <p class="text-[11px] text-white font-semibold leading-tight mt-0.5">Incluidos</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Model label -->
+        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-center z-30 whitespace-nowrap">
+          <p class="text-[9px] text-slate-500 font-medium tracking-[0.3em] uppercase mb-1">EQUIPO DESTACADO</p>
+          <p class="text-xs text-blue-300 font-semibold">Canon imageCLASS MF445dw</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 hidden lg:flex flex-col items-center gap-2">
+    <span class="text-[10px] text-slate-600 tracking-widest uppercase">Desplázate</span>
+    <div class="w-5 h-8 border border-slate-700 rounded-full flex items-start justify-center pt-1.5">
+      <span class="w-1 h-1.5 bg-blue-400 rounded-full animate-bounce"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ STATS ============================ -->
+<section class="relative py-24 bg-navy-900 overflow-hidden">
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+  <div class="absolute inset-0 bg-gradient-radial from-blue-950/30 via-transparent to-transparent"></div>
+
+  <!-- Animated background blobs -->
+  <div class="absolute top-10 left-[10%] w-72 h-72 bg-electric-600/10 rounded-full blur-[80px] printer-glow-1 pointer-events-none"></div>
+  <div class="absolute bottom-10 right-[10%] w-72 h-72 bg-sky-500/10 rounded-full blur-[80px] printer-glow-2 pointer-events-none"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-block text-blue-400 text-sm font-semibold tracking-widest uppercase mb-3">Nuestra trayectoria</span>
+      <h2 class="display text-4xl md:text-5xl font-black">
+        <span class="text-white">Números que respaldan</span>
+        <span class="block mt-2 shimmer-text">nuestra experiencia</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Card 1 -->
+      <div class="stat-card reveal relative glass rounded-2xl p-8 gradient-border overflow-hidden" style="--d:0s">
+        <!-- Sparkles -->
+        <div class="absolute top-3 right-3 w-1 h-1 rounded-full bg-blue-300 sparkle" style="animation-delay:0s"></div>
+        <div class="absolute top-8 right-10 w-0.5 h-0.5 rounded-full bg-sky-300 sparkle" style="animation-delay:1s"></div>
+        <div class="absolute bottom-12 right-4 w-1 h-1 rounded-full bg-blue-400 sparkle" style="animation-delay:2s"></div>
+
+        <!-- Icon with ring -->
+        <div class="stat-icon-wrap relative inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 mb-6 text-white shadow-lg text-blue-400">
+          <i data-lucide="users" class="w-7 h-7 text-white icon-bob" style="animation-delay:0s"></i>
+          <span class="icon-ring"></span>
+        </div>
+
+        <div class="stat-value display text-5xl font-black text-white leading-none">
+          <span class="counter" data-end="500">0</span><span class="text-blue-400">+</span>
+        </div>
+        <div class="text-base font-semibold text-white mt-2">Clientes atendidos</div>
+        <div class="text-sm text-slate-400 mt-1">Empresas de todos los sectores</div>
+
+        <!-- Progress bar -->
+        <div class="mt-6 h-1 bg-white/5 rounded-full overflow-hidden">
+          <div class="stat-progress h-full bg-gradient-to-r from-blue-400 to-sky-400 rounded-full" style="width:92%"></div>
+        </div>
+        <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-medium tracking-wider">
+          <span>SATISFACCIÓN</span>
+          <span class="text-blue-400">92%</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="stat-card reveal relative glass rounded-2xl p-8 gradient-border overflow-hidden" style="--d:.12s">
+        <div class="absolute top-4 right-5 w-1 h-1 rounded-full bg-sky-300 sparkle" style="animation-delay:0.5s"></div>
+        <div class="absolute top-10 right-12 w-0.5 h-0.5 rounded-full bg-blue-300 sparkle" style="animation-delay:1.5s"></div>
+        <div class="absolute bottom-10 right-6 w-1 h-1 rounded-full bg-sky-400 sparkle" style="animation-delay:2.5s"></div>
+
+        <div class="stat-icon-wrap relative inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-sky-500 to-blue-500 mb-6 text-white shadow-lg text-sky-400">
+          <i data-lucide="clock" class="w-7 h-7 text-white icon-bob" style="animation-delay:0.5s"></i>
+          <span class="icon-ring" style="animation-delay:0.6s"></span>
+        </div>
+
+        <div class="stat-value display text-5xl font-black text-white leading-none">
+          <span class="counter" data-end="24">0</span><span class="text-blue-400">/7</span>
+        </div>
+        <div class="text-base font-semibold text-white mt-2">Soporte técnico</div>
+        <div class="text-sm text-slate-400 mt-1">Especializado en impresión</div>
+
+        <div class="mt-6 h-1 bg-white/5 rounded-full overflow-hidden">
+          <div class="stat-progress h-full bg-gradient-to-r from-sky-400 to-blue-400 rounded-full" style="width:100%; animation-delay:0.2s"></div>
+        </div>
+        <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-medium tracking-wider">
+          <span>DISPONIBILIDAD</span>
+          <span class="text-blue-400">100%</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="stat-card reveal relative glass rounded-2xl p-8 gradient-border overflow-hidden" style="--d:.24s">
+        <div class="absolute top-5 right-4 w-1 h-1 rounded-full bg-blue-300 sparkle" style="animation-delay:1s"></div>
+        <div class="absolute top-12 right-9 w-0.5 h-0.5 rounded-full bg-sky-400 sparkle" style="animation-delay:2s"></div>
+        <div class="absolute bottom-14 right-5 w-1 h-1 rounded-full bg-blue-400 sparkle" style="animation-delay:0s"></div>
+
+        <div class="stat-icon-wrap relative inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-sky-500 mb-6 text-white shadow-lg text-blue-300">
+          <i data-lucide="package" class="w-7 h-7 text-white icon-bob" style="animation-delay:1s"></i>
+          <span class="icon-ring" style="animation-delay:1.2s"></span>
+        </div>
+
+        <div class="stat-value display text-5xl font-black text-white leading-none">
+          <span class="counter" data-end="100">0</span><span class="text-blue-400">%</span>
+        </div>
+        <div class="text-base font-semibold text-white mt-2">Consumibles incluidos</div>
+        <div class="text-sm text-slate-400 mt-1">En planes de renta</div>
+
+        <div class="mt-6 h-1 bg-white/5 rounded-full overflow-hidden">
+          <div class="stat-progress h-full bg-gradient-to-r from-blue-300 to-sky-400 rounded-full" style="width:100%; animation-delay:0.4s"></div>
+        </div>
+        <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-medium tracking-wider">
+          <span>COBERTURA</span>
+          <span class="text-blue-400">TOTAL</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="stat-card reveal relative glass rounded-2xl p-8 gradient-border overflow-hidden" style="--d:.36s">
+        <div class="absolute top-3 right-6 w-1 h-1 rounded-full bg-blue-300 sparkle" style="animation-delay:1.5s"></div>
+        <div class="absolute top-9 right-11 w-0.5 h-0.5 rounded-full bg-sky-300 sparkle" style="animation-delay:2.5s"></div>
+        <div class="absolute bottom-11 right-3 w-1 h-1 rounded-full bg-blue-400 sparkle" style="animation-delay:0.5s"></div>
+
+        <div class="stat-icon-wrap relative inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-electric-600 to-sky-600 mb-6 text-white shadow-lg text-electric-400">
+          <i data-lucide="wrench" class="w-7 h-7 text-white icon-bob" style="animation-delay:1.5s"></i>
+          <span class="icon-ring" style="animation-delay:1.8s"></span>
+        </div>
+
+        <div class="stat-value display text-5xl font-black text-white leading-none">
+          <span class="counter" data-end="48">0</span><span class="text-blue-400">h</span>
+        </div>
+        <div class="text-base font-semibold text-white mt-2">Tiempo de respuesta</div>
+        <div class="text-sm text-slate-400 mt-1">Mantenimiento preventivo</div>
+
+        <div class="mt-6 h-1 bg-white/5 rounded-full overflow-hidden">
+          <div class="stat-progress h-full bg-gradient-to-r from-electric-500 to-sky-500 rounded-full" style="width:85%; animation-delay:0.6s"></div>
+        </div>
+        <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-medium tracking-wider">
+          <span>VELOCIDAD</span>
+          <span class="text-blue-400">RÁPIDO</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom callout strip -->
+    <div class="mt-12 reveal" style="--d:.5s">
+      <div class="glass-blue rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-electric-600 to-sky-500 flex items-center justify-center">
+              <i data-lucide="award" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-navy-900 animate-pulse"></span>
+          </div>
+          <div>
+            <p class="text-white font-semibold text-sm">Distribuidor autorizado con más de una década de experiencia</p>
+            <p class="text-slate-400 text-xs">Atendemos toda República Dominicana</p>
+          </div>
+        </div>
+        <a href="https://wa.me/18097888434" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-electric-600 to-sky-500 text-white font-semibold text-sm rounded-xl hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 whitespace-nowrap">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          Conversar con un asesor
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+</section>
+
+<!-- ============================ PROBLEMS ============================ -->
+<section class="relative py-28 bg-navy-950 overflow-hidden">
+  <div class="absolute inset-0 grid-pattern opacity-40"></div>
+  <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/3 rounded-full blur-[120px]"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16 max-w-3xl mx-auto reveal">
+      <span class="inline-block text-red-400 text-sm font-semibold tracking-widest uppercase mb-3">El problema real</span>
+      <h2 class="display text-4xl md:text-5xl font-black text-white leading-tight">
+        Cuando una impresora falla, no solo se detiene un equipo.
+        <span class="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Se detiene una operación.</span>
+      </h2>
+      <p class="mt-6 text-slate-400 text-lg leading-relaxed">Los problemas de impresión no son solo técnicos. Son operativos, financieros y de imagen. ¿Te identificas con alguno de estos?</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="problemsGrid"></div>
+
+    <div class="mt-12 text-center reveal">
+      <p class="text-slate-300 text-lg">Si te has enfrentado a alguno de estos escenarios, <span class="text-blue-400 font-semibold">TDM tiene la solución.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SERVICES ============================ -->
+<section id="servicios" class="relative py-28 bg-navy-900 overflow-hidden">
+  <div class="absolute inset-0 grid-pattern opacity-30"></div>
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+  <div class="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px]"></div>
+  <div class="absolute bottom-1/3 right-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-[100px]"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-3xl mb-16 reveal">
+      <span class="inline-block text-blue-400 text-sm font-semibold tracking-widest uppercase mb-3">Lo que hacemos</span>
+      <h2 class="display text-4xl md:text-5xl font-black text-white leading-tight mb-5">
+        En TDM somos expertos en <span class="text-gradient">impresión empresarial</span>
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">
+        Ayudamos a empresas a reducir problemas, controlar costos y mantener sus equipos de impresión siempre operativos. Desde la selección del equipo correcto hasta el soporte post-venta.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid"></div>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+</section>
+
+<!-- ============================ COMPARE ============================ -->
+<section id="comparar" class="relative py-28 bg-navy-950 overflow-hidden">
+  <div class="absolute inset-0 grid-pattern opacity-30"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-blue-600/5 rounded-full blur-[120px]"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <span class="inline-block text-blue-400 text-sm font-semibold tracking-widest uppercase mb-3">Compara tus opciones</span>
+      <h2 class="display text-4xl md:text-5xl font-black text-white">
+        Comprar vs. <span class="text-gradient">Rentar con TDM</span>
+      </h2>
+      <p class="mt-4 text-slate-400 text-lg max-w-2xl mx-auto">Descubre cuál opción genera más valor para tu empresa a corto y largo plazo.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      <!-- Buy -->
+      <div class="reveal-left relative rounded-2xl border border-slate-700/50 bg-navy-800/50 backdrop-blur-sm p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-slate-700/50 flex items-center justify-center">
+            <i data-lucide="x" class="w-5 h-5 text-red-400"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white">Comprar</h3>
+            <p class="text-sm text-slate-500">Modelo tradicional</p>
+          </div>
+        </div>
+        <ul class="space-y-3" id="buyList"></ul>
+        <div class="absolute bottom-6 right-6 text-slate-700 text-7xl font-black leading-none select-none">?</div>
+      </div>
+
+      <!-- Rent TDM -->
+      <div class="reveal-right relative rounded-2xl overflow-hidden">
+        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/30 via-sky-500/20 to-blue-600/30 p-px">
+          <div class="h-full w-full rounded-2xl bg-navy-800/90 backdrop-blur-sm"></div>
+        </div>
+        <div class="absolute inset-0 bg-blue-600/5 rounded-2xl"></div>
+        <div class="absolute -inset-1 bg-gradient-to-br from-blue-600/20 to-sky-500/10 rounded-3xl blur-xl -z-10"></div>
+
+        <div class="relative p-8">
+          <div class="absolute top-5 right-5">
+            <span class="text-xs font-bold px-3 py-1.5 bg-blue-500 text-white rounded-full shadow-lg shadow-blue-500/30">✦ Recomendado</span>
+          </div>
+
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+              <i data-lucide="check" class="w-5 h-5 text-blue-400"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white">Rentar con TDM</h3>
+              <p class="text-sm text-blue-400">Solución administrada</p>
+            </div>
+          </div>
+
+          <ul class="space-y-3" id="rentList"></ul>
+
+          <a href="https://wa.me/18097888434?text=Hola%20TDM%2C%20me%20gustar%C3%ADa%20cotizar%20un%20plan%20de%20renta." target="_blank"
+             class="mt-7 flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-electric-600 to-sky-500 text-white font-bold text-sm rounded-xl hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            Cotizar mi plan de renta
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-14 reveal">
+      <div class="inline-block glass-blue rounded-2xl px-8 py-5 max-w-2xl">
+        <p class="text-white font-semibold text-lg leading-relaxed">
+          "No se trata solo de imprimir.
+          <span class="text-blue-300">Se trata de mantener tu operación funcionando."</span>
+        </p>
+        <p class="text-slate-500 text-sm mt-2">— TDM · Toner Depot Multiservicios</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CALCULATOR ============================ -->
+<section id="calculadora" class="relative py-28 bg-navy-900 overflow-hidden">
+  <div class="absolute inset-0 grid-pattern opacity-30"></div>
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-600/5 rounded-full blur-[120px]"></div>
+
+  <div class="relative max-w-5xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-12 reveal">
+      <div class="inline-flex items-center gap-2 glass-blue rounded-full px-4 py-2 mb-5">
+        <i data-lucide="calculator" class="w-4 h-4 text-blue-400"></i>
+        <span class="text-sm text-blue-300 font-medium">Calculadora interactiva</span>
+      </div>
+      <h2 class="display text-4xl md:text-5xl font-black text-white">
+        Descubre cuánto podrías <span class="text-gradient">optimizar</span>
+      </h2>
+      <p class="mt-4 text-slate-400 text-lg max-w-2xl mx-auto">Ingresa los datos de tu operación actual y descubre el potencial de una solución administrada.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="reveal-left glass rounded-2xl gradient-border p-8 space-y-6">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <span class="w-7 h-7 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-400 text-sm">1</span>
+          Tu operación actual
+        </h3>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-slate-400">Número de impresoras</span>
+            <span class="text-sm font-bold text-blue-300"><span id="vPrinters">3</span> equipo(s)</span>
+          </div>
+          <input type="range" min="1" max="30" step="1" value="3" id="iPrinters" class="slider w-full"/>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-slate-400">Páginas impresas al mes</span>
+            <span class="text-sm font-bold text-blue-300"><span id="vPages">2,000</span> páginas</span>
+          </div>
+          <input type="range" min="500" max="50000" step="500" value="2000" id="iPages" class="slider w-full"/>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-slate-400">Costo mensual en tóner</span>
+            <span class="text-sm font-bold text-blue-300">RD$<span id="vToner">4,000</span></span>
+          </div>
+          <input type="range" min="500" max="30000" step="500" value="4000" id="iToner" class="slider w-full"/>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-slate-400">Mantenimiento mensual</span>
+            <span class="text-sm font-bold text-blue-300">RD$<span id="vMaint">2,000</span></span>
+          </div>
+          <input type="range" min="0" max="15000" step="250" value="2000" id="iMaint" class="slider w-full"/>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-slate-400">Reparaciones mensuales</span>
+            <span class="text-sm font-bold text-blue-300">RD$<span id="vRepair">1,500</span></span>
+          </div>
+          <input type="range" min="0" max="20000" step="250" value="1500" id="iRepair" class="slider w-full"/>
+        </div>
+      </div>
+
+      <div class="reveal-right space-y-5">
+        <div class="glass rounded-2xl gradient-border p-6 space-y-4">
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-orange-400"></i>
+            Tu costo visible mensual
+          </h3>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center"><span class="text-sm text-slate-400">Tóner y consumibles</span><span class="text-sm font-semibold text-white">RD$<span id="cToner">4,000</span></span></div>
+            <div class="flex justify-between items-center"><span class="text-sm text-slate-400">Mantenimiento</span><span class="text-sm font-semibold text-white">RD$<span id="cMaint">2,000</span></span></div>
+            <div class="flex justify-between items-center"><span class="text-sm text-slate-400">Reparaciones</span><span class="text-sm font-semibold text-white">RD$<span id="cRepair">1,500</span></span></div>
+            <div class="pt-2 border-t border-white/10 flex justify-between">
+              <span class="text-sm font-bold text-white">Total visible</span>
+              <span class="text-sm font-bold text-white">RD$<span id="cTotal">7,500</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-orange-500/20 bg-orange-500/5 p-6">
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-sm font-semibold text-orange-300">Costos ocultos estimados</span>
+            <span class="text-sm font-bold text-orange-300">+ RD$<span id="cHidden">2,625</span></span>
+          </div>
+          <p class="text-xs text-slate-500">Tiempo perdido, gestión interna, interrupciones operativas, oportunidad perdida.</p>
+        </div>
+
+        <div class="rounded-2xl overflow-hidden">
+          <div class="bg-gradient-to-br from-electric-600 to-sky-500 p-6">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-white/80 text-sm font-medium">Costo total estimado</span>
+              <span class="text-white font-black text-xl">RD$<span id="cWithHidden">10,125</span></span>
+            </div>
+            <div class="h-px bg-white/20 mb-3"></div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="trending-down" class="w-5 h-5 text-green-300"></i>
+              <div>
+                <span class="text-sm text-white/80">Optimización potencial</span>
+                <p class="text-green-300 font-black text-2xl">RD$<span id="cSaving">3,037</span>/mes</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-navy-800/80 p-4">
+            <p class="text-xs text-slate-400 text-center">*Estimación orientativa. Con una solución administrada de impresión podrías reducir costos ocultos y mejorar la continuidad operativa. Los resultados reales varían según la empresa.</p>
+          </div>
+        </div>
+
+        <a id="calcCTA" href="https://wa.me/18097888434" target="_blank"
+           class="flex items-center justify-center gap-2 w-full py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold text-sm rounded-xl hover:scale-105 hover:shadow-xl hover:shadow-green-500/30 transition-all duration-300">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          Obtener cotización personalizada
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+</section>
+
+<!-- ============================ TESTIMONIALS ============================ -->
+<section id="testimonios" class="relative py-28 bg-navy-950 overflow-hidden">
+  <div class="absolute inset-0 grid-pattern opacity-25"></div>
+  <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px]"></div>
+  <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-[100px]"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <span class="inline-block text-blue-400 text-sm font-semibold tracking-widest uppercase mb-3">Lo que dicen nuestros clientes</span>
+      <h2 class="display text-4xl md:text-5xl font-black text-white">
+        Empresas que confían <span class="text-gradient">en TDM</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="testimonialsGrid"></div>
+
+    <div class="mt-12 flex justify-center reveal">
+      <div class="glass-blue rounded-2xl px-8 py-4 flex items-center gap-4">
+        <div class="flex">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-sky-600 border-2 border-navy-950 flex items-center justify-center text-white text-xs font-bold">MR</div>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-sky-600 border-2 border-navy-950 flex items-center justify-center text-white text-xs font-bold -ml-2">CM</div>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-sky-600 border-2 border-navy-950 flex items-center justify-center text-white text-xs font-bold -ml-2">AP</div>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-sky-600 border-2 border-navy-950 flex items-center justify-center text-white text-xs font-bold -ml-2">RS</div>
+        </div>
+        <div>
+          <div class="flex items-center gap-1 mb-0.5">
+            <i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i>
+            <span class="text-white font-bold text-sm ml-1">5.0</span>
+          </div>
+          <p class="text-slate-400 text-xs">+500 empresas satisfechas</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ AI CHAT ============================ -->
+<section class="relative py-28 bg-navy-900 overflow-hidden">
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-600/5 rounded-full blur-[120px]"></div>
+
+  <div class="relative max-w-6xl mx-auto px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      <div class="reveal-left">
+        <div class="inline-flex items-center gap-2 glass-blue rounded-full px-4 py-2 mb-6">
+          <i data-lucide="sparkles" class="w-4 h-4 text-blue-400"></i>
+          <span class="text-sm text-blue-300 font-medium">Asistente inteligente</span>
+        </div>
+        <h2 class="display text-4xl md:text-5xl font-black text-white leading-tight mb-6">
+          Resuelve tus dudas <span class="text-gradient">al instante</span>
+        </h2>
+        <p class="text-slate-400 text-lg leading-relaxed mb-8">
+          ¿Tienes preguntas sobre qué equipo necesitas, si conviene rentar o comprar, o qué pasa cuando un equipo falla? Nuestro asistente virtual está listo para orientarte.
+        </p>
+
+        <div class="space-y-3 mb-8" id="chatQuestions"></div>
+
+        <a href="https://wa.me/18097888434" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold text-sm rounded-xl hover:scale-105 transition-all duration-300 shadow-lg shadow-green-500/20">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> Hablar con un asesor real
+        </a>
+      </div>
+
+      <div class="reveal-right relative">
+        <div class="glass rounded-2xl gradient-border overflow-hidden shadow-2xl shadow-blue-900/30">
+          <div class="px-5 py-4 border-b border-white/5 flex items-center gap-3 bg-navy-800/50">
+            <div class="flex gap-1.5">
+              <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+            </div>
+            <div class="flex items-center gap-2 ml-2">
+              <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-electric-600 to-sky-500 flex items-center justify-center">
+                <i data-lucide="bot" class="w-4 h-4 text-white"></i>
+              </div>
+              <span class="text-sm font-semibold text-white">Asistente TDM</span>
+              <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            </div>
+          </div>
+
+          <div class="h-72 overflow-y-auto p-5 space-y-4" id="chatMessages">
+            <div class="flex justify-start">
+              <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-electric-600 to-sky-500 flex items-center justify-center mr-2 mt-1 flex-shrink-0">
+                <i data-lucide="bot" class="w-3.5 h-3.5 text-white"></i>
+              </div>
+              <div class="max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed glass border border-white/10 text-slate-300 rounded-tl-sm">
+                ¡Hola! Soy el asistente virtual de TDM. Puedo ayudarte a encontrar la solución de impresión perfecta para tu empresa. ¿Qué deseas saber?
+              </div>
+            </div>
+          </div>
+
+          <div class="px-5 py-4 border-t border-white/5 bg-navy-800/30">
+            <div class="flex items-center gap-3">
+              <div class="flex-1 glass rounded-xl px-4 py-2.5 text-sm text-slate-500 border border-white/5">Escribe tu pregunta o selecciona una opción...</div>
+              <button class="w-9 h-9 bg-gradient-to-br from-electric-600 to-sky-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform">
+                <i data-lucide="send" class="w-4 h-4 text-white"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl"></div>
+        <div class="absolute -top-6 -left-6 w-20 h-20 bg-sky-500/10 rounded-full blur-2xl"></div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section id="faq" class="relative py-28 bg-navy-950 overflow-hidden">
+  <div class="absolute inset-0 grid-pattern opacity-25"></div>
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+
+  <div class="relative max-w-4xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <div class="inline-flex items-center gap-2 glass-blue rounded-full px-4 py-2 mb-5">
+        <i data-lucide="help-circle" class="w-4 h-4 text-blue-400"></i>
+        <span class="text-sm text-blue-300 font-medium">Preguntas frecuentes</span>
+      </div>
+      <h2 class="display text-4xl md:text-5xl font-black text-white">
+        Respuestas a tus <span class="text-gradient">dudas frecuentes</span>
+      </h2>
+    </div>
+
+    <div class="space-y-3" id="faqList"></div>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+</section>
+
+<!-- ============================ MAP ============================ -->
+<section class="relative py-28 bg-navy-900 overflow-hidden">
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+  <div class="absolute inset-0 grid-pattern opacity-25"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block text-blue-400 text-sm font-semibold tracking-widest uppercase mb-3">Ubicación</span>
+      <h2 class="display text-4xl md:text-5xl font-black text-white">
+        Visítanos o solicita <span class="text-gradient">asistencia</span>
+      </h2>
+      <p class="mt-4 text-slate-400 text-lg max-w-xl mx-auto">Atendemos empresas en todo el territorio nacional. ¿Prefieres coordinar una visita? Escríbenos.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <div class="reveal-left space-y-4">
+        <div class="glass rounded-2xl gradient-border p-5 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="map-pin" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <div>
+            <p class="text-white font-semibold text-sm mb-1">Nuestra oficina</p>
+            <p class="text-slate-400 text-xs leading-relaxed">República Dominicana</p>
+            <p class="text-slate-400 text-xs leading-relaxed">— Próximamente dirección completa —</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl gradient-border p-5 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="clock" class="w-5 h-5 text-sky-400"></i>
+          </div>
+          <div>
+            <p class="text-white font-semibold text-sm mb-1">Horario de atención</p>
+            <p class="text-slate-400 text-xs leading-relaxed">Lun – Vie: 8:00am – 6:00pm</p>
+            <p class="text-slate-400 text-xs leading-relaxed">Sáb: 8:00am – 1:00pm</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl gradient-border p-5 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="phone" class="w-5 h-5 text-blue-300"></i>
+          </div>
+          <div>
+            <p class="text-white font-semibold text-sm mb-1">Teléfono / WhatsApp</p>
+            <p class="text-slate-400 text-xs leading-relaxed">809-788-8434</p>
+            <p class="text-slate-400 text-xs leading-relaxed">Respuesta rápida garantizada</p>
+          </div>
+        </div>
+        <a href="https://wa.me/18097888434?text=Hola%20TDM%2C%20me%20gustar%C3%ADa%20coordinar%20una%20visita." target="_blank"
+           class="flex items-center justify-center gap-2 w-full py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold text-sm rounded-xl hover:scale-105 transition-all duration-300 shadow-lg shadow-green-500/20 mt-2">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          Coordinar visita por WhatsApp
+        </a>
+      </div>
+
+      <div class="reveal lg:col-span-2 rounded-2xl overflow-hidden gradient-border" style="min-height: 360px">
+        <div class="relative h-[360px] glass flex items-center justify-center">
+          <svg class="absolute inset-0 w-full h-full opacity-30">
+            <defs>
+              <pattern id="mapgrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3B82F6" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#mapgrid)"/>
+            <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#2563EB" stroke-width="2" opacity="0.4"/>
+            <line x1="30%" y1="0" x2="30%" y2="100%" stroke="#2563EB" stroke-width="2" opacity="0.4"/>
+            <line x1="65%" y1="0" x2="65%" y2="100%" stroke="#2563EB" stroke-width="1.5" opacity="0.3"/>
+            <line x1="0" y1="25%" x2="100%" y2="25%" stroke="#2563EB" stroke-width="1" opacity="0.2"/>
+            <line x1="0" y1="75%" x2="100%" y2="75%" stroke="#2563EB" stroke-width="1" opacity="0.2"/>
+          </svg>
+          <div class="relative z-10 flex flex-col items-center">
+            <div class="relative float-anim">
+              <div class="absolute inset-0 bg-blue-500 rounded-full blur-xl opacity-40 scale-150"></div>
+              <div class="relative w-16 h-16 bg-gradient-to-br from-electric-600 to-sky-500 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/50 border-4 border-white">
+                <i data-lucide="map-pin" class="w-8 h-8 text-white"></i>
+              </div>
+            </div>
+            <div class="mt-4 glass-blue rounded-xl px-5 py-3 text-center">
+              <p class="text-white font-bold text-sm">TDM - Toner Depot Multiservicios</p>
+              <p class="text-blue-300 text-xs mt-1">República Dominicana</p>
+              <p class="text-slate-400 text-xs mt-1">* Dirección exacta disponible al cotizar</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+</section>
+
+<!-- ============================ FINAL CTA ============================ -->
+<section class="relative py-28 overflow-hidden bg-navy-950">
+  <div class="absolute inset-0 animated-gradient opacity-80"></div>
+  <div class="absolute inset-0 grid-pattern opacity-20"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-electric-600/15 rounded-full blur-[120px]"></div>
+
+  <div class="relative max-w-5xl mx-auto px-6 lg:px-8 text-center">
+    <div class="inline-flex items-center gap-2 glass-blue rounded-full px-4 py-2 mb-8 reveal">
+      <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+      <span class="text-sm text-blue-200 font-medium">Disponible para tu empresa ahora</span>
+    </div>
+
+    <h2 class="display text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] text-white mb-6 reveal" style="--d:.1s">
+      Tu empresa no necesita
+      <span class="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">más problemas</span>
+      de impresión.
+    </h2>
+
+    <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed reveal" style="--d:.2s">
+      Necesita un aliado que mantenga todo funcionando.
+      <span class="text-blue-300 font-semibold">TDM es ese aliado.</span>
+    </p>
+
+    <div class="flex items-center justify-center reveal" style="--d:.3s">
+      <a href="https://wa.me/18097888434?text=Hola%20TDM%2C%20me%20gustar%C3%ADa%20hablar%20con%20un%20asesor." target="_blank"
+         class="group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-green-500 to-green-600 text-white font-black text-lg rounded-2xl hover:scale-105 transition-all duration-300 shadow-2xl shadow-green-500/30">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+        Hablar con un asesor TDM
+        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+      </a>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-6 mt-10 reveal" style="--d:.5s">
+      <div class="flex items-center gap-2 text-slate-400 text-sm"><i data-lucide="shield" class="w-4 h-4 text-blue-400"></i> Sin compromisos iniciales</div>
+      <div class="flex items-center gap-2 text-slate-400 text-sm"><i data-lucide="zap" class="w-4 h-4 text-blue-400"></i> Respuesta en minutos</div>
+      <div class="flex items-center gap-2 text-slate-400 text-sm"><i data-lucide="clock" class="w-4 h-4 text-blue-400"></i> Cotización gratuita</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="relative bg-navy-950 border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-gradient-to-br from-electric-600 to-sky-500 rounded-xl flex items-center justify-center">
+            <i data-lucide="printer" class="w-5 h-5 text-white"></i>
+          </div>
+          <div>
+            <span class="text-white font-black text-lg display">TDM</span>
+            <p class="text-blue-400 text-xs">Toner Depot Multiservicios</p>
+          </div>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed max-w-xs mb-5">
+          Soluciones de impresión empresarial: renta, venta, mantenimiento, soporte técnico y consumibles para que tu empresa nunca se detenga.
+        </p>
+        <a href="https://wa.me/18097888434" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500/10 border border-green-500/30 text-green-400 font-semibold text-sm rounded-xl hover:bg-green-500/20 transition-colors">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp: 809-788-8434
+        </a>
+      </div>
+
+      <div>
+        <h4 class="text-white font-bold text-sm mb-4">Servicios</h4>
+        <ul class="space-y-2.5 text-sm text-slate-400">
+          <li>Renta de impresoras</li><li>Venta de equipos</li><li>Soporte técnico</li><li>Mantenimiento</li><li>Consumibles</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-bold text-sm mb-4">Sectores</h4>
+        <ul class="space-y-2.5 text-sm text-slate-400">
+          <li>Empresas corporativas</li><li>Colegios y universidades</li><li>Clínicas y hospitales</li><li>Constructoras</li><li>PYMES y negocios</li><li>Entidades públicas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-slate-500 text-sm">© <span id="year">2026</span> TDM · Toner Depot Multiservicios. Todos los derechos reservados.</p>
+      <p class="text-slate-600 text-xs flex items-center gap-1">Hecho con <i data-lucide="heart" class="w-3 h-3 text-red-500"></i> en República Dominicana</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================ FLOATING WHATSAPP ============================ -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+  <div id="waPopup" class="hidden glass rounded-2xl gradient-border p-5 w-72 shadow-2xl shadow-black/50">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-11 h-11 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
+        <i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
+      </div>
+      <div class="flex-1">
+        <p class="text-white font-bold text-sm">TDM · Asesor</p>
+        <div class="flex items-center gap-1.5">
+          <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <p class="text-green-400 text-xs">En línea ahora</p>
+        </div>
+      </div>
+      <button id="closeWA" class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+        <i data-lucide="x" class="w-3.5 h-3.5 text-slate-400"></i>
+      </button>
+    </div>
+    <div class="bg-white/5 rounded-xl p-3.5 mb-4 text-sm text-slate-300 leading-relaxed border border-white/5">
+      👋 ¡Hola! ¿Necesitas soluciones de impresión para tu empresa?<br>
+      <span class="text-blue-300 font-medium">Escríbenos y te cotizamos hoy.</span>
+    </div>
+    <a href="https://wa.me/18097888434?text=Hola%20TDM%2C%20me%20gustar%C3%ADa%20solicitar%20una%20cotizaci%C3%B3n." target="_blank"
+       class="flex items-center justify-center gap-2 w-full py-3 bg-green-500 hover:bg-green-400 text-white font-bold text-sm rounded-xl transition-all duration-200 hover:scale-105 shadow-lg shadow-green-500/30">
+      <i data-lucide="message-circle" class="w-4 h-4"></i> Cotizar ahora
+    </a>
+    <p class="text-center text-xs text-slate-500 mt-2">809-788-8434 · Respuesta en minutos</p>
+  </div>
+
+  <button id="waFab" class="relative w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40 whatsapp-pulse group hover:scale-110 transition-transform">
+    <i data-lucide="message-circle" class="w-7 h-7 text-white"></i>
+    <div class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-navy-950">1</div>
+  </button>
+  <div id="waLabel" class="absolute bottom-0 right-[72px] bg-navy-800 rounded-full px-3 py-1.5 text-xs font-semibold text-white whitespace-nowrap border border-white/10 shadow-lg">Cotizar ahora</div>
+</div>
+
+<!-- ============================ SCRIPTS ============================ -->
+<script>
+// ============================== DATA ==============================
+const PROBLEMS = [
+  {icon:'clock', title:'Filas para imprimir', desc:'Un equipo lento o sin tóner genera cuellos de botella que afectan la productividad de todo el equipo.', color:'from-red-500/20 to-orange-500/10', border:'border-red-500/20', iconBg:'bg-red-500/20 text-red-400'},
+  {icon:'gauge', title:'Equipos lentos y obsoletos', desc:'Impresoras antiguas que no rinden lo que la empresa necesita, generando frustración y pérdida de tiempo.', color:'from-orange-500/20 to-yellow-500/10', border:'border-orange-500/20', iconBg:'bg-orange-500/20 text-orange-400'},
+  {icon:'dollar-sign', title:'Costos ocultos', desc:'Reparaciones, consumibles, piezas y soporte técnico que no se presupuestan y terminan siendo una sorpresa.', color:'from-yellow-500/20 to-amber-500/10', border:'border-yellow-500/20', iconBg:'bg-yellow-500/20 text-yellow-400'},
+  {icon:'package', title:'Sin tóner en el momento crítico', desc:'Quedarse sin consumibles justo cuando se necesita imprimir un documento urgente o un contrato importante.', color:'from-rose-500/20 to-pink-500/10', border:'border-rose-500/20', iconBg:'bg-rose-500/20 text-rose-400'},
+  {icon:'wrench', title:'Reparaciones inesperadas', desc:'Fallas técnicas sin aviso que paralizan la operación y generan gastos no contemplados en el presupuesto.', color:'from-purple-500/20 to-violet-500/10', border:'border-purple-500/20', iconBg:'bg-purple-500/20 text-purple-400'},
+  {icon:'trending-down', title:'Pérdida de tiempo operativo', desc:'Cada hora que un equipo no funciona correctamente se traduce en productividad perdida y clientes insatisfechos.', color:'from-red-600/20 to-rose-500/10', border:'border-red-600/20', iconBg:'bg-red-600/20 text-red-300'},
+];
+
+const SERVICES = [
+  {icon:'printer', title:'Renta de impresoras', desc:'Equipa tu empresa con impresoras de última generación sin inversión inicial. Pago mensual fijo con todo incluido.', features:['Sin inversión inicial','Equipos modernos','Actualizaciones incluidas'], gradient:'from-blue-600 to-blue-800', badge:'Más popular'},
+  {icon:'shopping-cart', title:'Venta de equipos', desc:'Adquiere el equipo de impresión ideal para tu empresa. Te asesoramos para elegir la mejor opción según tu volumen.', features:['Asesoría personalizada','Garantía de fábrica','Entrega e instalación'], gradient:'from-sky-500 to-blue-600'},
+  {icon:'headphones', title:'Soporte técnico', desc:'Equipo de técnicos especializados disponible para resolver cualquier incidencia de forma rápida y eficiente.', features:['Técnicos certificados','Atención prioritaria','Diagnóstico remoto'], gradient:'from-electric-600 to-sky-500'},
+  {icon:'wrench', title:'Mantenimiento', desc:'Programas preventivos y correctivos que garantizan el máximo rendimiento y vida útil de tus equipos.', features:['Preventivo programado','Correctivo inmediato','Historial de servicio'], gradient:'from-blue-700 to-indigo-700'},
+  {icon:'package', title:'Consumibles', desc:'Tóner, cartuchos y suministros originales y compatibles de alta calidad. Disponibilidad inmediata.', features:['Tóner original y compatible','Entrega a domicilio','Inventario gestionado'], gradient:'from-sky-600 to-blue-600'},
+  {icon:'lightbulb', title:'Asesoría de soluciones', desc:'Analizamos las necesidades de tu empresa para recomendarte la solución de impresión más eficiente.', features:['Análisis de necesidades','ROI documentado','Plan personalizado'], gradient:'from-blue-500 to-sky-600'},
+];
+
+const BUY = ['Inversión inicial alta','Reparaciones inesperadas','Consumibles por separado','Equipos que se deprecian','Costos ocultos constantes','Gestión interna compleja'];
+const RENT = ['Pago mensual controlado','Soporte técnico incluido','Mantenimiento incluido','Consumibles incluidos','Equipos siempre operativos','Menos preocupaciones internas'];
+
+const TESTIMONIALS = [
+  {name:'María Rodríguez', role:'Gerente Administrativa', company:'Constructora Orion', text:'Antes teníamos paros constantes por fallas en nuestras impresoras. Con TDM, llevamos 8 meses sin una sola interrupción. El soporte técnico es excepcional y siempre responden el mismo día.', avatar:'MR', sector:'Construcción', gradient:'from-blue-600 to-blue-800'},
+  {name:'Carlos Mejía', role:'Director de Operaciones', company:'Clínica MedCenter', text:'La renta de impresoras con TDM fue una decisión estratégica. Eliminamos los gastos imprevistos, incluimos tóner y mantenimiento en un solo pago mensual. La tranquilidad operativa no tiene precio.', avatar:'CM', sector:'Salud', gradient:'from-sky-500 to-blue-600'},
+  {name:'Ana Paulino', role:'Coordinadora Académica', company:'Colegio Bilingüe Del Sur', text:'Manejamos alto volumen de impresión diaria. TDM nos equipó con las impresoras correctas para nuestras necesidades y el soporte técnico siempre está disponible. Altamente recomendados.', avatar:'AP', sector:'Educación', gradient:'from-electric-600 to-sky-500'},
+  {name:'Roberto Santos', role:'Gerente de IT', company:'Grupo Empresarial Norte', text:'La asesoría de TDM fue clave para elegir el equipo correcto para cada área. No solo vendieron hardware, nos dieron una solución completa. Excelente servicio.', avatar:'RS', sector:'Corporativo', gradient:'from-blue-700 to-indigo-700'},
+  {name:'Laura Fernández', role:'Administradora', company:'Oficina Legal Hernández', text:'Como firma de abogados, la confidencialidad y continuidad en nuestros documentos es crítica. TDM entendió nuestras necesidades y entregó una solución perfecta. Sin quejas en 2 años.', avatar:'LF', sector:'Legal', gradient:'from-sky-600 to-blue-600'},
+  {name:'Juan Pérez', role:'Presidente', company:'Empresa PYME', text:'Pensaba que la renta era solo para grandes empresas. TDM me demostró que incluso mi pequeño negocio se beneficia enormemente. Los costos son predecibles y el servicio es profesional.', avatar:'JP', sector:'PYME', gradient:'from-blue-500 to-sky-600'},
+];
+
+const FAQ_DATA = [
+  {q:'¿La renta incluye mantenimiento?', a:'Sí. Todos nuestros planes de renta incluyen mantenimiento preventivo y correctivo sin costo adicional. Realizamos revisiones periódicas programadas y atendemos cualquier falla técnica sin cargo extra.'},
+  {q:'¿El plan incluye consumibles (tóner)?', a:'Sí, en nuestros planes de renta los consumibles (tóner, cartuchos) están incluidos. Te abastecemos de forma preventiva para que nunca te quedes sin tóner en un momento crítico.'},
+  {q:'¿Atienden empresas pequeñas o solo grandes corporaciones?', a:'Atendemos empresas de todos los tamaños: desde pequeños negocios con 1-2 impresoras hasta corporaciones con flotas de 50+ equipos. Tenemos planes adaptados a cada necesidad y presupuesto.'},
+  {q:'¿También venden impresoras (no solo renta)?', a:'Sí, también comercializamos equipos de impresión para empresas que prefieren la compra. Te asesoramos para elegir el equipo correcto y te brindamos soporte post-venta.'},
+  {q:'¿Qué pasa si el equipo falla o se daña?', a:'En planes de renta, enviamos un técnico certificado sin costo adicional. Para fallas graves, te proveemos un equipo de reemplazo para mantener tu operación activa. Tiempo de respuesta máximo: 48 horas hábiles.'},
+  {q:'¿Puedo solicitar una cotización por WhatsApp?', a:'¡Absolutamente! Es nuestra forma de comunicación más rápida. Escríbenos al 809-788-8434 y un asesor te responderá con prontitud.'},
+  {q:'¿Tienen soporte técnico especializado?', a:'Sí. Contamos con técnicos certificados en impresión empresarial. Ofrecemos soporte remoto para diagnósticos rápidos y visitas técnicas presenciales cuando es necesario.'},
+  {q:'¿Puedo elegir el tipo o modelo de impresora?', a:'Sí. Nuestro equipo de asesoría te ayuda a seleccionar el equipo más adecuado: monocromático, color, láser, inyección de tinta, equipos multifuncionales, alto volumen, entre otros.'},
+];
+
+const CHAT_QUESTIONS = [
+  {q:'¿Qué impresora necesita mi empresa?', a:'Depende de tu volumen de impresión y tipo de documentos. Para oficinas con hasta 5.000 páginas/mes, recomendamos impresoras monocromáticas de mediano rendimiento. Para volúmenes superiores o impresión a color profesional, tenemos equipos de alto rendimiento. ¿Quieres que un asesor analice tu caso específico?'},
+  {q:'¿Conviene más comprar o rentar?', a:'Para la mayoría de las empresas, la renta es más conveniente porque incluye mantenimiento, soporte técnico y consumibles en un pago mensual fijo. Evitas la inversión inicial alta y los costos imprevistos. El modelo de renta convierte un gasto de capital en un gasto operativo predecible.'},
+  {q:'¿Qué pasa si mi equipo se daña?', a:'Con nuestros planes de renta, si el equipo falla, nosotros enviamos un técnico sin costo adicional. En casos graves, te proveemos un equipo de reemplazo para que tu operación no se detenga. Tiempo de respuesta máximo: 48 horas hábiles.'},
+  {q:'¿El plan incluye mantenimiento?', a:'Sí. Todos nuestros planes de renta incluyen mantenimiento preventivo y correctivo sin costo adicional. Esto incluye limpieza periódica, revisión de piezas, ajustes de calibración y reemplazo de componentes en caso de desgaste normal.'},
+];
+
+// ============================== RENDER ==============================
+function html(s){ const d=document.createElement('div'); d.innerHTML=s.trim(); return d.firstElementChild; }
+
+// Problems
+const pg = document.getElementById('problemsGrid');
+PROBLEMS.forEach((p,i)=>{
+  pg.innerHTML += `
+    <div class="reveal relative rounded-2xl p-6 bg-gradient-to-br ${p.color} border ${p.border} backdrop-blur-sm card-hover" style="--d:${i*0.08}s">
+      <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl ${p.iconBg} mb-4">
+        <i data-lucide="${p.icon}" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-lg font-bold text-white mb-2">${p.title}</h3>
+      <p class="text-sm text-slate-400 leading-relaxed">${p.desc}</p>
+    </div>`;
+});
+
+// Services
+const sg = document.getElementById('servicesGrid');
+SERVICES.forEach((s,i)=>{
+  sg.innerHTML += `
+    <div class="reveal relative group card-hover" style="--d:${i*0.08}s">
+      <div class="relative h-full glass rounded-2xl p-7 gradient-border transition-all duration-300 overflow-hidden">
+        ${s.badge ? `<div class="absolute top-4 right-4"><span class="text-xs font-bold px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-full">${s.badge}</span></div>`:''}
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${s.gradient} text-white shadow-lg mb-5 group-hover:scale-110 transition-transform duration-300">
+          <i data-lucide="${s.icon}" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">${s.title}</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-5">${s.desc}</p>
+        <ul class="space-y-2">
+          ${s.features.map(f=>`<li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span>${f}</li>`).join('')}
+        </ul>
+      </div>
+    </div>`;
+});
+
+// Compare lists
+document.getElementById('buyList').innerHTML = BUY.map(p=>`
+  <li class="flex items-center gap-3">
+    <div class="w-5 h-5 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0">
+      <i data-lucide="x" class="w-3 h-3 text-red-400"></i>
+    </div>
+    <span class="text-slate-400 text-sm">${p}</span>
+  </li>`).join('');
+
+document.getElementById('rentList').innerHTML = RENT.map(p=>`
+  <li class="flex items-center gap-3">
+    <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+      <i data-lucide="check" class="w-3 h-3 text-blue-400"></i>
+    </div>
+    <span class="text-white text-sm font-medium">${p}</span>
+  </li>`).join('');
+
+// Testimonials
+const tg = document.getElementById('testimonialsGrid');
+TESTIMONIALS.forEach((t,i)=>{
+  tg.innerHTML += `
+    <div class="reveal relative glass rounded-2xl gradient-border p-7 flex flex-col gap-5 card-hover" style="--d:${i*0.08}s">
+      <i data-lucide="quote" class="w-8 h-8 text-blue-500/30 absolute top-5 right-5"></i>
+      <div class="flex gap-0.5">
+        ${'<i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i>'.repeat(5)}
+      </div>
+      <p class="text-slate-300 text-sm leading-relaxed flex-1">"${t.text}"</p>
+      <div class="flex items-center gap-3 pt-3 border-t border-white/5">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-bold text-sm flex-shrink-0">${t.avatar}</div>
+        <div>
+          <div class="text-white font-semibold text-sm">${t.name}</div>
+          <div class="text-slate-500 text-xs">${t.role} · ${t.company}</div>
+        </div>
+        <div class="ml-auto">
+          <span class="text-xs font-medium px-2 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">${t.sector}</span>
+        </div>
+      </div>
+    </div>`;
+});
+
+// FAQ
+const fq = document.getElementById('faqList');
+FAQ_DATA.forEach((f,i)=>{
+  fq.innerHTML += `
+    <div class="reveal" style="--d:${i*0.05}s">
+      <button class="faq-btn w-full text-left glass rounded-2xl px-6 py-5 flex items-center justify-between gap-4 transition-all duration-300 border border-white/5 hover:border-blue-500/20 hover:bg-white/5">
+        <span class="font-semibold text-white text-sm md:text-base pr-4">${f.q}</span>
+        <div class="faq-icon flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-300 bg-white/5 text-slate-400">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+        </div>
+      </button>
+      <div class="faq-answer overflow-hidden" style="max-height:0; transition: max-height 0.4s ease;">
+        <div class="px-6 py-5 glass rounded-b-2xl -mt-3 border-l border-r border-b border-blue-500/20 bg-blue-500/5">
+          <p class="text-slate-400 text-sm leading-relaxed">${f.a}</p>
+        </div>
+      </div>
+    </div>`;
+});
+
+// Chat questions
+const cq = document.getElementById('chatQuestions');
+CHAT_QUESTIONS.forEach(q=>{
+  cq.innerHTML += `<button class="chat-q w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 border glass border-white/10 text-slate-300 hover:border-blue-500/30 hover:text-white hover:bg-white/5" data-q="${q.q}">→ ${q.q}</button>`;
+});
+
+// Render icons after dynamic content insert
+lucide.createIcons();
+
+// ============================== INTERACTIONS ==============================
+// Particles
+(function particles(){
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const colors = ['#3B82F6','#60A5FA','#0EA5E9','#93C5FD','#2563EB'];
+  const ps = [];
+  for(let i=0;i<80;i++){
+    ps.push({
+      x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+      vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4,
+      size:Math.random()*2.5+0.5, opacity:Math.random()*0.6+0.1,
+      color:colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+  function loop(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ps.forEach((p,i)=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>canvas.width)p.vx*=-1;
+      if(p.y<0||p.y>canvas.height)p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle=p.color; ctx.globalAlpha=p.opacity; ctx.fill();
+      for(let j=i+1;j<ps.length;j++){
+        const dx=ps[j].x-p.x, dy=ps[j].y-p.y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(ps[j].x,ps[j].y);
+          ctx.strokeStyle='#3B82F6'; ctx.globalAlpha=(1-d/120)*0.15; ctx.lineWidth=0.5; ctx.stroke();
+        }
+      }
+      ctx.globalAlpha=1;
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+  window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+})();
+
+// Reveal on scroll
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+},{threshold:0.12, rootMargin:'-50px'});
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el=>io.observe(el));
+
+// Navbar scroll
+window.addEventListener('scroll',()=>{
+  const nav = document.getElementById('navbar');
+  if(window.scrollY>20){
+    nav.classList.remove('py-5','bg-transparent');
+    nav.classList.add('py-3','bg-navy-950/90','backdrop-blur-xl','border-b','border-white/5','shadow-2xl','shadow-black/40');
+  } else {
+    nav.classList.add('py-5','bg-transparent');
+    nav.classList.remove('py-3','bg-navy-950/90','backdrop-blur-xl','border-b','border-white/5','shadow-2xl','shadow-black/40');
+  }
+});
+
+// Mobile menu
+document.getElementById('hamburger').addEventListener('click', ()=>{
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+document.querySelectorAll('#mobileMenu a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open'));
+});
+
+// Counters
+const counters = document.querySelectorAll('.counter');
+const cio = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el = e.target;
+      const end = +el.dataset.end;
+      const dur = 1800;
+      const start = performance.now();
+      function tick(now){
+        const t = Math.min(1,(now-start)/dur);
+        const v = Math.floor(end * (1 - Math.pow(1-t, 3)));
+        el.textContent = v.toLocaleString();
+        if(t<1) requestAnimationFrame(tick);
+        else el.textContent = end.toLocaleString();
+      }
+      requestAnimationFrame(tick);
+      cio.unobserve(el);
+    }
+  });
+},{threshold:0.4});
+counters.forEach(c=>cio.observe(c));
+
+// FAQ toggle
+document.querySelectorAll('.faq-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const ans = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    const isOpen = ans.style.maxHeight && ans.style.maxHeight !== '0px';
+    document.querySelectorAll('.faq-answer').forEach(a=>{a.style.maxHeight='0px';});
+    document.querySelectorAll('.faq-icon').forEach(i=>{
+      i.classList.remove('bg-blue-500/30','text-blue-400');
+      i.classList.add('bg-white/5','text-slate-400');
+      i.innerHTML = '<i data-lucide="plus" class="w-4 h-4"></i>';
+    });
+    document.querySelectorAll('.faq-btn').forEach(b=>{
+      b.classList.remove('border-blue-500/40','bg-blue-500/5');
+      b.classList.add('border-white/5');
+    });
+    if(!isOpen){
+      ans.style.maxHeight = ans.scrollHeight + 'px';
+      icon.classList.add('bg-blue-500/30','text-blue-400');
+      icon.classList.remove('bg-white/5','text-slate-400');
+      icon.innerHTML = '<i data-lucide="minus" class="w-4 h-4"></i>';
+      btn.classList.add('border-blue-500/40','bg-blue-500/5');
+      btn.classList.remove('border-white/5');
+    }
+    lucide.createIcons();
+  });
+});
+
+// Chat simulator
+const chatMessages = document.getElementById('chatMessages');
+document.querySelectorAll('.chat-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q = btn.dataset.q;
+    const item = CHAT_QUESTIONS.find(x=>x.q===q);
+    document.querySelectorAll('.chat-q').forEach(b=>{
+      b.classList.remove('bg-blue-500/20','border-blue-500/50','text-blue-300');
+      b.classList.add('glass','border-white/10','text-slate-300');
+    });
+    btn.classList.add('bg-blue-500/20','border-blue-500/50','text-blue-300');
+    btn.classList.remove('glass','border-white/10','text-slate-300');
+
+    // Push user msg
+    chatMessages.innerHTML += `
+      <div class="flex justify-end">
+        <div class="max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed bg-gradient-to-br from-electric-600 to-sky-500 text-white rounded-tr-sm">${q}</div>
+      </div>`;
+    // Typing
+    const typingHTML = `
+      <div class="flex justify-start typing-bubble">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-electric-600 to-sky-500 flex items-center justify-center mr-2 mt-1 flex-shrink-0">
+          <i data-lucide="bot" class="w-3.5 h-3.5 text-white"></i>
+        </div>
+        <div class="max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed glass border border-white/10 text-slate-300 rounded-tl-sm">
+          <div class="flex gap-1.5 py-1">
+            <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay:0s"></div>
+            <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay:0.15s"></div>
+            <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay:0.3s"></div>
+          </div>
+        </div>
+      </div>`;
+    chatMessages.innerHTML += typingHTML;
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    lucide.createIcons();
+
+    setTimeout(()=>{
+      const typing = chatMessages.querySelector('.typing-bubble');
+      if(typing) typing.remove();
+      chatMessages.innerHTML += `
+        <div class="flex justify-start">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-electric-600 to-sky-500 flex items-center justify-center mr-2 mt-1 flex-shrink-0">
+            <i data-lucide="bot" class="w-3.5 h-3.5 text-white"></i>
+          </div>
+          <div class="max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed glass border border-white/10 text-slate-300 rounded-tl-sm">${item.a}</div>
+        </div>`;
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      lucide.createIcons();
+    }, 1100);
+  });
+});
+
+// Calculator
+const ids = ['Printers','Pages','Toner','Maint','Repair'];
+function fmt(n){ return n.toLocaleString(); }
+function updateCalc(){
+  const printers = +document.getElementById('iPrinters').value;
+  const pages = +document.getElementById('iPages').value;
+  const toner = +document.getElementById('iToner').value;
+  const maint = +document.getElementById('iMaint').value;
+  const repair = +document.getElementById('iRepair').value;
+  document.getElementById('vPrinters').textContent = printers;
+  document.getElementById('vPages').textContent = fmt(pages);
+  document.getElementById('vToner').textContent = fmt(toner);
+  document.getElementById('vMaint').textContent = fmt(maint);
+  document.getElementById('vRepair').textContent = fmt(repair);
+  document.getElementById('cToner').textContent = fmt(toner);
+  document.getElementById('cMaint').textContent = fmt(maint);
+  document.getElementById('cRepair').textContent = fmt(repair);
+  const total = toner+maint+repair;
+  document.getElementById('cTotal').textContent = fmt(total);
+  const hidden = Math.round(total*0.35);
+  document.getElementById('cHidden').textContent = fmt(hidden);
+  const withHidden = total+hidden;
+  document.getElementById('cWithHidden').textContent = fmt(withHidden);
+  document.getElementById('cSaving').textContent = fmt(Math.round(withHidden*0.3));
+
+  const msg = encodeURIComponent(`Hola TDM, completé la calculadora: tengo ${printers} impresora(s), imprimo ${fmt(pages)} páginas/mes, y gasto aproximadamente RD$${fmt(total)} mensuales. Me gustaría una cotización personalizada.`);
+  document.getElementById('calcCTA').href = `https://wa.me/18097888434?text=${msg}`;
+}
+ids.forEach(id=>{
+  document.getElementById('i'+id).addEventListener('input',updateCalc);
+});
+updateCalc();
+
+// Floating WhatsApp
+const waFab = document.getElementById('waFab');
+const waPopup = document.getElementById('waPopup');
+const waLabel = document.getElementById('waLabel');
+let waOpen = false;
+waFab.addEventListener('click',()=>{
+  waOpen = !waOpen;
+  if(waOpen){
+    waPopup.classList.remove('hidden');
+    waLabel.classList.add('hidden');
+  } else {
+    waPopup.classList.add('hidden');
+    waLabel.classList.remove('hidden');
+  }
+});
+document.getElementById('closeWA').addEventListener('click',()=>{
+  waPopup.classList.add('hidden');
+  waLabel.classList.remove('hidden');
+  waOpen = false;
+});
+
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
